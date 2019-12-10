@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+
+<head>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/prop-types@15.6/prop-types.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js"></script>
+
+</head>
+<body>
+    <div id="app"></div>
+    <script type="text/babel" > 
+    class Widget extends React.Component{
+    constructor(props){
+        super(props);
+        this.state ={
+            data:[
+                {
+                    title:"total",
+                    number:12455,
+                    percentage:"+ 3%"
+                },
+                {
+                    title:"direct",
+                    number:4567654,
+                    percentage:"+ 45%"
+                },
+                {
+                    title:"referral",
+                    number:76544,
+                    percentage:"+ 3%"
+                }
+            ]
+        }
+    }
+    renderItem(entry){
+       const { title, number, percentage } = entry;
+       return(
+         <div key={title}>
+           <h3>{title}</h3>
+           <p>
+             {number} &bnsp;<span>{percentage}</span> 
+           </p>
+          </div>
+       )
+    }
+
+
+    render(){
+        const { logo, title } = this.props;
+        const { data } = this.state;
+
+        return(
+            <div>
+                <img width="100" height="100" src={logo}/>
+                <h2>{title}</h2>
+                { data.map(this.renderItem)}
+            </div>
+        )
+    }
+}
+
+ReactDOM.render(
+    <Widget 
+      title="Website Traffic"
+      logo="https://image.flaticon.com/icons/svg/148/148767.svg"
+      />,
+      document.getElementById("app")
+    
+)
+    </script>
+    
+</body>
+</html>

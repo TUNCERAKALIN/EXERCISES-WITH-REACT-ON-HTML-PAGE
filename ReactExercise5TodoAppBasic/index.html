@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<head>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/prop-types@15.6/prop-types.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js"></script>
+  
+</head>
+<body>
+    <div id="app"></div>
+
+    <script type="text/babel">
+      function TodoItem({title, done, index, toggleDone }) {
+    return (
+        <li>
+            <input
+              type="checkbox"
+              checked={done}
+              onChange={()=> toggleDone(index)}/>
+              &nbsp;
+              {done ? <strike>{title}</strike> :<span>{title}</span>}
+        </li>
+    )
+}
+
+class TodoApp extends React.Component {
+    state = {
+        todoInput: "",
+        todos:[
+            {
+                title:"Learn React",
+                done: false
+            },
+            {
+                title:"Go to Code.Hub",
+                done: true
+            },
+            {
+                title: "Go out for a drink",
+                done: false
+            }
+    ]
+    }
+
+
+toggleDone = index =>{
+    const newTodos = [...this.state.todos];
+    newTodos[index].done = !newTodos[index].done;
+
+    this.setState({ todos: newTodos });
+}
+
+updateInput = event =>{
+    this.setState({ todoInput : event.target.value })
+
+}
+
+addTodo = e =>{
+    e.preventDefault();
+    const newToDo = {
+        title: this.state.todoInput,
+        done: false
+    }
+    const newTodos = [...this.state.todos, newTodo]
+
+    this.setState({todos : newTodos, todoInput: ""})
+}
+
+render(){
+    const { todos, todoInput } = this.state;
+
+    return (
+        <div>
+            <h2>My Todos</h2>
+            <ul>
+                {todos.map((todo, index) => (
+                    <TodoItem 
+                      key={todo.title}
+                      {...todo}
+                      index={index}
+                      toggleDone={this.toggleDone}/>
+                ))}
+            </ul>
+
+            <form onSubmit={this.addTodo}>
+                Add Todo:{" "}
+                <input 
+                  value={todoInput}
+                  onChange={this.updateInput}
+                  text="text"/>
+                
+                <button type="submit">Add Todo</button>
+            </form>
+        </div>
+    )
+}
+}
+
+ReactDOM.render(<TodoApp/>, document.getElementById("app"));
+    </script>
+</body>
+</html>
